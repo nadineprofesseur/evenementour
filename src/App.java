@@ -28,8 +28,10 @@ public class App {
 		}
 		
 		// Tester si on reussi a reinterpeter une donnee enregistrer et lue du ficheir - le dernier local
-		Local localLu = localDAO.lireLocal();
-		System.out.println("Le local lu est " + localLu.getNumero());
+		
+		Local localLu = null;
+		while((localLu = localDAO.lireLocal())!= null)
+			System.out.println("Le local lu est " + localLu.getNumero());
 		
 	}
 

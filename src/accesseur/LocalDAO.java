@@ -53,10 +53,17 @@ public class LocalDAO { // Fichier
 		}
 	}	
 	
-	
+	protected FileInputStream fluxLecture = null;
 	protected boolean lecturePrete = false;
 	protected void preparerLecture()
 	{
+		try {
+			fluxLecture = new FileInputStream(cheminFichier);
+			if(fluxLecture == null) System.out.println("Flux est null");			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		this.lecturePrete = true;
 	}
 	
@@ -64,20 +71,10 @@ public class LocalDAO { // Fichier
 	{
 		if(!this.lecturePrete) this.preparerLecture();
 		
-		String cheminFichier = "locaux.data";
-		FileInputStream flux = null;
 		try {
-			flux = new FileInputStream(cheminFichier);
-			if(flux == null) System.out.println("Flux est null");			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		if(flux == null) return null;
-		
-		try {
+			if(fluxLecture.available() < 5) return null;
 			byte[] futurLocal = new byte[5];
-			flux.read(futurLocal);			
+			fluxLecture.read(futurLocal);			
 			return Local.interpreterBinaire(futurLocal);
 			
 		} catch (IOException e) {
