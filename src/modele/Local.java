@@ -158,5 +158,12 @@ public class Local
 		return binaire;
 	}
 	
+	public static Local interpreterBinaire(byte[] localBinaire)
+	{
+		Local local = new Local("",0);
+		
+		return local;
+	}
+	
 	
 }
