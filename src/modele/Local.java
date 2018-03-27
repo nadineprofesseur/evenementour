@@ -165,7 +165,7 @@ public class Local
 			numeroBinaire[position] = localBinaire[position];
 		String numero = new String(numeroBinaire); 
 		
-		Local local = new Local(numero,0);		
+		Local local = new Local(numero,0);	
 		
 		return local;
 	}

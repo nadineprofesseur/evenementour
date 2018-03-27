@@ -24,17 +24,24 @@ public class LocalDAO { // Fichier
 		return listeLocal;
 	}
 	
-	public void enregistrerLocal(Local local)
+	public String cheminFichier = "locaux.data";
+	protected FileOutputStream flux = null;
+	protected boolean enregistrementPret = false;
+	protected void preparerEnregistrement()
 	{
-		String cheminFichier = "locaux.data";
-		FileOutputStream flux = null;
 		try {
 			flux = new FileOutputStream(cheminFichier);
 			if(flux == null) System.out.println("Flux est null");			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}
+		}		
 		
+		this.enregistrementPret = true;
+	}
+	
+	public void enregistrerLocal(Local local)
+	{
+		if(! this.enregistrementPret) this.preparerEnregistrement();
 		if(flux == null) return;
 		
 		try {
