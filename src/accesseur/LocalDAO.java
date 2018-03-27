@@ -53,8 +53,17 @@ public class LocalDAO { // Fichier
 		}
 	}	
 	
+	
+	protected boolean lecturePrete = false;
+	protected void preparerLecture()
+	{
+		this.lecturePrete = true;
+	}
+	
 	public Local lireLocal()
 	{
+		if(!this.lecturePrete) this.preparerLecture();
+		
 		String cheminFichier = "locaux.data";
 		FileInputStream flux = null;
 		try {
