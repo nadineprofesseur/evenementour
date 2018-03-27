@@ -19,7 +19,10 @@ public class App {
 			//System.out.println("Local " + local.getNumero());
 			System.out.println(local.exporterXML());
 			System.out.println(local.exporterCSV());
-			//System.out.println(local.exporterBinaire());
+			
+			Local localReinterprete = Local.interpreterBinaire(local.exporterBinaire());
+			System.out.println("Local reinterprete est " + local.getNumero());
+			
 			localDAO.enregistrerLocal(local);
 		}
 		

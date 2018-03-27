@@ -159,8 +159,13 @@ public class Local
 	}
 	
 	public static Local interpreterBinaire(byte[] localBinaire)
-	{
-		Local local = new Local("",0);
+	{		
+		byte[] numeroBinaire = new byte[5];
+		for(int position = 0; position < 5; position++)
+			numeroBinaire[position] = localBinaire[position];
+		String numero = new String(numeroBinaire); 
+		
+		Local local = new Local(numero,0);		
 		
 		return local;
 	}
