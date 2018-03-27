@@ -20,13 +20,16 @@ public class App {
 			System.out.println(local.exporterXML());
 			System.out.println(local.exporterCSV());
 			
+			// Tester si on reussi a reinterpreter le format binaire exporte par le modele
 			Local localReinterprete = Local.interpreterBinaire(local.exporterBinaire());
 			System.out.println("Local reinterprete est " + local.getNumero());
 			
 			localDAO.enregistrerLocal(local);
 		}
 		
-		
+		// Tester si on reussi a reinterpeter une donnee enregistrer et lue du ficheir - le dernier local
+		Local localLu = localDAO.lireLocal();
+		System.out.println("Le local lu est " + localLu.getNumero());
 		
 	}
 

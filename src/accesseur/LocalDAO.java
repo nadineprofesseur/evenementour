@@ -62,9 +62,13 @@ public class LocalDAO { // Fichier
 		try {
 			byte[] futurLocal = new byte[5];
 			flux.read(futurLocal);			
+			return Local.interpreterBinaire(futurLocal);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
 		return null;
 	}
 	
