@@ -178,8 +178,7 @@ public class Local
 		if(this.internet) drapeaux = (byte) (drapeaux | DRAPEAU_INTERNET); // pourrait donner 0000 0111 
 		if(this.telephone) drapeaux = (byte) (drapeaux | DRAPEAU_TELEPHONE); // pourrait donner 0000 1111 
 
-		byte drapeauxGauche = (byte)(this.imprimantes << 4);
-		
+		int drapeauxGauche = (this.imprimantes << 4);
 		binaire[5] = (byte) (drapeaux | drapeauxGauche);
 		
 		return binaire;
@@ -201,7 +200,8 @@ public class Local
 		local.internet = ((drapeaux & DRAPEAU_INTERNET) != 0);
 		local.telephone = ((drapeaux & DRAPEAU_TELEPHONE) != 0);
 		
-		local.imprimantes = (drapeaux >> 4);
+		local.imprimantes = (drapeaux & 0b11110000);
+		local.imprimantes = local.imprimantes >>> 4;
 		
 		return local;
 	}
