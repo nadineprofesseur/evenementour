@@ -31,8 +31,10 @@ public class App {
 		
 		Local localLu = null;
 		while((localLu = localDAO.lireLocal())!= null)
+		{
 			System.out.println("Le local lu est " + localLu.getNumero());
-		
+			System.out.println(localLu.exporterXML());
+		}
 	}
 
 }

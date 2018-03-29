@@ -18,7 +18,9 @@ public class LocalDAO { // Fichier
 		List<Local> listeLocal = new ArrayList<Local>();
 		
 		listeLocal.add(new Local("O-114", 28));
-		listeLocal.add(new Local("B-127", 35));
+		Local localO127 = new Local("B-127", 35);
+		localO127.setInternet(true);
+		listeLocal.add(localO127);
 		listeLocal.add(new Local("O-155", 35));
 		
 		return listeLocal;
@@ -73,8 +75,8 @@ public class LocalDAO { // Fichier
 		
 		try {
 			if(fluxLecture.available() < 5) return null;
-			byte[] futurLocal = new byte[5];
-			fluxLecture.read(futurLocal);			
+			byte[] futurLocal = new byte[6];
+			fluxLecture.read(futurLocal);	
 			return Local.interpreterBinaire(futurLocal);
 			
 		} catch (IOException e) {
