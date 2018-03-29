@@ -12,7 +12,8 @@ public class Local
 	protected boolean fenetres = true;
 	protected boolean internet = false;
 	protected boolean telephone = true;
-	protected boolean imprimante = false;
+	
+	protected int imprimantes = 0;
 	
 	protected TYPE_PROJECTEUR projecteur = TYPE_PROJECTEUR.DIGITAL;
 		
@@ -68,12 +69,12 @@ public class Local
 		this.telephone = telephone;
 	}
 
-	public boolean isImprimante() {
-		return imprimante;
+	public int getImprimantes() {
+		return imprimantes;
 	}
 
-	public void setImprimante(boolean imprimante) {
-		this.imprimante = imprimante;
+	public void setImprimantes(int imprimantes) {
+		this.imprimantes = imprimantes;
 	}
 
 	public boolean isReconfigurable() {
@@ -137,8 +138,10 @@ public class Local
 		
 		String xml = "";
 		xml += "<numero>" + this.numero + "</numero>";
+		xml += "<reconfigurable>" + this.reconfigurable + "</reconfigurable>";
 		xml += "<fenetres>" + this.fenetres + "</fenetres>";
 		xml += "<internet>" + this.internet + "</internet>";
+		xml += "<telephone>" + this.telephone + "</telephone>";
 		return "<local>" + xml + "</local>";
 	}
 	
@@ -149,8 +152,10 @@ public class Local
 		return csv;
 	}
 	
-	public static byte DRAPEAU_FENETRES = 2;
-	public static byte DRAPEAU_INTERNET = 4;
+	public static byte DRAPEAU_RECONFIGURABLE = 1; // 0000 0001
+	public static byte DRAPEAU_FENETRES = 2; // 0000 0010
+	public static byte DRAPEAU_INTERNET = 4; // 0000 0100
+	public static byte DRAPEAU_TELEPHONE = 8; // 0000 1000
 	
 	protected interface Binaire
 	{
@@ -167,8 +172,10 @@ public class Local
 			binaire[position] = (byte) numeroEnLettre[position];
 					
 		byte drapeaux = 0; // 0000 0000
-		if(this.fenetres) drapeaux = (byte) (drapeaux | DRAPEAU_FENETRES); // pourrait donner 0000 0010
-		if(this.internet) drapeaux = (byte) (drapeaux | DRAPEAU_INTERNET); // pourrait donner 0000 0110 
+		if(this.reconfigurable) drapeaux = (byte) (drapeaux | DRAPEAU_RECONFIGURABLE); // pourrait donner 0000 0001
+		if(this.fenetres) drapeaux = (byte) (drapeaux | DRAPEAU_FENETRES); // pourrait donner 0000 0011
+		if(this.internet) drapeaux = (byte) (drapeaux | DRAPEAU_INTERNET); // pourrait donner 0000 0111 
+		if(this.telephone) drapeaux = (byte) (drapeaux | DRAPEAU_TELEPHONE); // pourrait donner 0000 1111 
 
 		binaire[5] = drapeaux;
 		
@@ -185,9 +192,11 @@ public class Local
 		Local local = new Local(numero,0);	
 		
 		byte drapeaux = localBinaire[Binaire.TAILLE_NUMERO];
-		
+
+		local.reconfigurable = ((drapeaux & DRAPEAU_RECONFIGURABLE) != 0);
 		local.fenetres = ((drapeaux & DRAPEAU_FENETRES) != 0);
 		local.internet = ((drapeaux & DRAPEAU_INTERNET) != 0);
+		local.telephone = ((drapeaux & DRAPEAU_TELEPHONE) != 0);
 		
 		return local;
 	}
