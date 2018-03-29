@@ -151,14 +151,19 @@ public class Local
 	
 	public static byte DRAPEAU_FENETRES = 2;
 	public static byte DRAPEAU_INTERNET = 4;
-
+	
+	protected interface Binaire
+	{
+		public static int TAILLE_NUMERO = 5;		
+	}
+	
 	public byte[] exporterBinaire()
 	{
 		byte[] binaire = new byte[6];
 
 		// Le local a 5 bytes
 		char[] numeroEnLettre = this.numero.toCharArray();
-		for(int position = 0; position < 5; position++)
+		for(int position = 0; position < Binaire.TAILLE_NUMERO; position++)
 			binaire[position] = (byte) numeroEnLettre[position];
 					
 		byte drapeaux = 0; // 0000 0000
@@ -172,14 +177,14 @@ public class Local
 	
 	public static Local interpreterBinaire(byte[] localBinaire)
 	{		
-		byte[] numeroBinaire = new byte[5];
-		for(int position = 0; position < 5; position++)
+		byte[] numeroBinaire = new byte[Binaire.TAILLE_NUMERO];
+		for(int position = 0; position < Binaire.TAILLE_NUMERO; position++)
 			numeroBinaire[position] = localBinaire[position];
 		String numero = new String(numeroBinaire); 
 		
 		Local local = new Local(numero,0);	
 		
-		byte drapeaux = localBinaire[5];
+		byte drapeaux = localBinaire[Binaire.TAILLE_NUMERO];
 		
 		local.fenetres = ((drapeaux & DRAPEAU_FENETRES) != 0);
 		local.internet = ((drapeaux & DRAPEAU_INTERNET) != 0);
