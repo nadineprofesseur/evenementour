@@ -13,7 +13,7 @@ public class Local
 	protected boolean internet = false;
 	protected boolean telephone = true;
 	
-	protected int imprimantes = 0;
+	protected int imprimantes = 0; // 0 à 15 sur 4 bits
 	
 	protected TYPE_PROJECTEUR projecteur = TYPE_PROJECTEUR.DIGITAL;
 		

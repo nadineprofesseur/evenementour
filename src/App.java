@@ -35,6 +35,13 @@ public class App {
 			System.out.println("Le local lu est " + localLu.getNumero());
 			System.out.println(localLu.exporterXML());
 		}
+		
+		
+		int test = 6;
+		//test = test << 1;
+		System.out.println("6 << 1 = " + (test<<1));
+		System.out.println("6 << 2 = " + (test<<2));
+		System.out.println("6 << 3 = " + (test<<3));
 	}
 
 }
