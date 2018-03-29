@@ -20,6 +20,7 @@ public class LocalDAO { // Fichier
 		listeLocal.add(new Local("O-114", 28));
 		Local localO127 = new Local("B-127", 35);
 		localO127.setInternet(true);
+		localO127.setImprimantes(4);
 		listeLocal.add(localO127);
 		listeLocal.add(new Local("O-155", 35));
 		

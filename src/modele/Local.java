@@ -17,8 +17,8 @@ public class Local
 	
 	protected TYPE_PROJECTEUR projecteur = TYPE_PROJECTEUR.DIGITAL;
 		
-	protected int nombreOrdinateurs = 0;
-	protected int nombrePlaces;
+	protected int nombreOrdinateurs = 0; // max 255
+	protected int nombrePlaces; // max 255
 	
 	protected String couleur; // convertir pour fichier
 
@@ -142,13 +142,14 @@ public class Local
 		xml += "<fenetres>" + this.fenetres + "</fenetres>";
 		xml += "<internet>" + this.internet + "</internet>";
 		xml += "<telephone>" + this.telephone + "</telephone>";
+		xml += "<imprimantes>" + this.imprimantes + "</imprimantes>";
 		return "<local>" + xml + "</local>";
 	}
 	
 	public String exporterCSV()
 	{
 		String csv = "";		
-		csv += this.numero + "," + this.fenetres + "," + this.internet;
+		csv += this.numero + "," + this.fenetres + "," + this.internet + "," + this.imprimantes;
 		return csv;
 	}
 	
@@ -177,7 +178,9 @@ public class Local
 		if(this.internet) drapeaux = (byte) (drapeaux | DRAPEAU_INTERNET); // pourrait donner 0000 0111 
 		if(this.telephone) drapeaux = (byte) (drapeaux | DRAPEAU_TELEPHONE); // pourrait donner 0000 1111 
 
-		binaire[5] = drapeaux;
+		byte drapeauxGauche = (byte)(this.imprimantes << 4);
+		
+		binaire[5] = (byte) (drapeaux | drapeauxGauche);
 		
 		return binaire;
 	}
@@ -197,6 +200,8 @@ public class Local
 		local.fenetres = ((drapeaux & DRAPEAU_FENETRES) != 0);
 		local.internet = ((drapeaux & DRAPEAU_INTERNET) != 0);
 		local.telephone = ((drapeaux & DRAPEAU_TELEPHONE) != 0);
+		
+		local.imprimantes = (drapeaux >> 4);
 		
 		return local;
 	}
